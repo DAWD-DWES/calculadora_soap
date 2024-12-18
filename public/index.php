@@ -1,6 +1,7 @@
 <?php
 
 require "../vendor/autoload.php";
+include_once '../src/error_handler.php';
 require "../src/autoload.php";
 
 use eftec\bladeone\BladeOne;
