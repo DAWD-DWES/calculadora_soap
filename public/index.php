@@ -1,50 +1,48 @@
 <?php
 
 require "../vendor/autoload.php";
-include_once '../src/error_handler.php';
-require "../src/autoload.php";
 
 use eftec\bladeone\BladeOne;
-use Clases\{
-    Calculator,
+use Clases\CalculatorClientFactory;
+use Clases\Type\{
     Add,
     Subtract,
     Multiply,
     Divide
 };
 
-$views = __DIR__ . '\..\views'; // it uses the folder /views to read the templates
+$vistas = __DIR__ . '\..\vistas'; // it uses the folder /views to read the templates
 $cache = __DIR__ . '\..\cache'; // it uses the folder /cache to compile the result.
 
-$blade = new BladeOne($views, $cache, BladeOne::MODE_DEBUG);
+$blade = new BladeOne($vistas, $cache, BladeOne::MODE_DEBUG);
 
 $operadores = ['+', '-', '*', '/'];
 
 function evalExpresion(int $operando1 = 0, string $operador = "", int $operando2 = 0): int {
-    $service = new Calculator();
+    $cliente = CalculatorClientFactory::factory($wsdl = 'http://www.dneonline.com/calculator.asmx?WSDL');
     $res = 0;
     switch ($operador ?? null) {
         case '+': {
                 $request = new Add($operando1, $operando2);
-                $response = $service->Add($request);
+                $response = $cliente->Add($request);
                 $res = $response->getAddResult();
                 break;
             }
         case '-': {
                 $request = new Subtract($operando1, $operando2);
-                $response = $service->Subtract($request);
+                $response = $cliente->Subtract($request);
                 $res = $response->getSubtractResult();
                 break;
             }
         case '*': {
                 $request = new Multiply($operando1, $operando2);
-                $response = $service->Multiply($request);
+                $response = $cliente->Multiply($request);
                 $res = $response->getMultiplyResult();
                 break;
             }
         case '/': {
                 $request = new Divide($operando1, $operando2);
-                $response = $service->Divide($request);
+                $response = $cliente->Divide($request);
                 $res = $response->getDivideResult();
                 break;
             }
@@ -54,8 +52,6 @@ function evalExpresion(int $operando1 = 0, string $operador = "", int $operando2
     }
     return ($res > 0) ? $res : 0;
 }
-
-$service = new Clases\Calculator();
 
 $valor = filter_input(INPUT_POST, 'valor') ?? 0;
 $expresion = filter_input(INPUT_POST, 'expresion') ?? '';

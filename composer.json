@@ -4,7 +4,10 @@
     "type": "project",
     "license": "gnu/gpl",
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -18,7 +21,9 @@
         }
     ],
     "require": {
-        "wsdl2phpgenerator/wsdl2phpgenerator": "^3.4",
-        "eftec/bladeone": "^4.4"
+        "eftec/bladeone": "^4.4",
+        "symfony/http-client": "^6.4",
+        "nyholm/psr7": "^1.8",
+        "phpro/soap-client": "3.3.0"
     }
 }
