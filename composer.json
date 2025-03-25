@@ -21,9 +21,11 @@
         }
     ],
     "require": {
-        "eftec/bladeone": "^4.4",
+        "eftec/bladeone": "^4.4"
+    },
+    "require-dev": {
+        "phpro/soap-client": "3.3.0",
         "symfony/http-client": "^6.4",
-        "nyholm/psr7": "^1.8",
-        "phpro/soap-client": "3.3.0"
+        "nyholm/psr7": "^1.8"
     }
 }
